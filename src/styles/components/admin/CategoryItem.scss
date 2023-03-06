@@ -1,0 +1,27 @@
+.item-category {
+  width: 100%;
+
+  a {
+    width: 100%;
+    padding: $space-medium;
+    border: rgba(128, 128, 128, 0.4) 0.1px solid;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: $space-medium;
+  }
+
+  span {
+    text-transform: capitalize;
+  }
+
+  img {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+  }
+
+  .icon {
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,46 @@
+.home {
+  .hero {
+    height: 100vh;
+    width: 100%;
+    background: url("../../../../public/assets/background.jpg");
+    background-size: cover;
+    background-position: right;
+    justify-content: center;
+  }
+
+  h1,
+  h2 {
+    color: black;
+  }
+
+  .bbq {
+    width: 400px;
+    max-width: 100%;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+}
+
+@media (min-width: 750px) {
+  .home {
+    .bbq {
+      width: 450px;
+      height: 450px;
+      top: 35%;
+      left: 5%;
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .home {
+    .bbq {
+      width: 500px;
+      height: 500px;
+      bottom: 5%;
+      left: 10%;
+    }
+  }
+}

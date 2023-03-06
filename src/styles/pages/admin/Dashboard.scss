@@ -1,0 +1,15 @@
+.dashboard {
+  height: 100vh;
+  justify-content: center;
+  gap: $space-medium;
+
+  .card {
+    height: 150px;
+    width: 200px;
+    background-color: $color-yellow;
+    color: black;
+    text-align: center;
+    line-height: 150px;
+    cursor: pointer;
+  }
+}

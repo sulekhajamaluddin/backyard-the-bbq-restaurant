@@ -1,0 +1,35 @@
+.view-category {
+  width: 100%;
+  height: 600px;
+  color: black; // Remove this one
+  padding: $space-big;
+  gap: $space-big;
+
+  h1 {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  article {
+    gap: $space-big;
+    padding: $space-medium;
+    border: rgba(128, 128, 128, 0.4) 0.1px solid;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .title {
+    text-transform: uppercase;
+  }
+
+  span {
+    display: block;
+    font-weight: 400;
+  }
+
+  a {
+    display: inline-block;
+  }
+}

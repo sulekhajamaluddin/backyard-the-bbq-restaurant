@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: $color-yellow;
+}
+
+a,
+span {
+  text-decoration: none;
+  color: inherit;
+}
+
+.button,
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

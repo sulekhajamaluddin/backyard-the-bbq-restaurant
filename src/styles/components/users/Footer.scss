@@ -1,0 +1,28 @@
+.footer {
+  height: 110px;
+  padding: $space-big;
+  background-color: black;
+
+  section {
+    width: 100%;
+    display: flex;
+  }
+
+  .location,
+  .timing {
+    width: 50%;
+  }
+
+  .timing {
+    text-align: right;
+  }
+
+  span {
+    display: inline-block;
+    font-size: $paragraph-small-mobile;
+  }
+
+  small {
+    font-size: $paragraph-x-small-mobile;
+  }
+}

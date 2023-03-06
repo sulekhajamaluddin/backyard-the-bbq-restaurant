@@ -1,0 +1,15 @@
+.error-page {
+  height: 100vh;
+  padding: $space-big;
+  justify-content: center;
+  gap: $space-big;
+
+  h1 {
+    text-align: center;
+  }
+
+  span {
+    display: block;
+    font-size: 18px;
+  }
+}

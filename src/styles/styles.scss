@@ -1,0 +1,24 @@
+// Base
+@import "./base/variables";
+@import "./base/layout";
+@import "./base/typography";
+@import "./base/wrappers.scss";
+
+//Components
+@import "./components/common/Loader.scss";
+@import "./components/common/Form.scss";
+@import "./components/users/Navbar.scss";
+@import "./components/users/Footer.scss";
+@import "./components/users/CategoryItem.scss";
+@import "./components/users/ProductItem.scss";
+@import "./components/admin/CategoryItem.scss";
+
+//Pages
+@import "./pages/users/Home.scss";
+@import "./pages/users/Menu.scss";
+@import "./pages/users/Category.scss";
+@import "./pages/admin/Dashboard.scss";
+@import "./pages/admin/Categories.scss";
+@import "./pages/admin/ViewCategory.scss";
+@import "./pages/admin/AddCategory.scss";
+@import "./pages/common/NotFound.scss";

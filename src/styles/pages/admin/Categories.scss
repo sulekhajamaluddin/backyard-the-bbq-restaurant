@@ -1,0 +1,14 @@
+.categories {
+  padding: $space-big;
+  gap: $space-big;
+  color: black;
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .add,
+  .back {
+    display: inline-block;
+  }
+}
