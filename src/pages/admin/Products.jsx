@@ -1,13 +1,15 @@
 // //Node Modules
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 //Project Files
 import { readAllSubcollections } from "../../scripts/firestore/readDocuments";
 import { useProducts } from "../../state/ProductsProvider";
 import Loader from "../../components/common/Loader";
 import Error from "../common/Error";
-import ProductItem from "../../components/admin/ProductItem";
+import Item from "../../components/admin/Item";
 
 export default function Products() {
   //Global State
@@ -42,15 +44,22 @@ export default function Products() {
   if (status === 2) return <Error />;
 
   const productList = products.map((product) => (
-    <ProductItem key={product.id} product={product} />
+    <Item
+      key={product.id}
+      item={product}
+      path={`/admin/products/${product.id}`}
+    />
   ));
 
   return (
     <div className="categories flex-column-center">
       <h1>PRODUCTS</h1>
       <div className="button-holder">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          Back
+        <button onClick={() => navigate("/admin")}>
+          <FontAwesomeIcon
+            className="back-icon"
+            icon={solid("circle-arrow-left")}
+          />
         </button>
         <Link className="primary-button" to="/admin/products/add">
           Add new

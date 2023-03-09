@@ -1,9 +1,21 @@
 .dashboard {
   height: 100vh;
-  justify-content: center;
-  gap: $space-medium;
+  padding: 100px 0;
+
+  h1 {
+    font-size: $h1-admin;
+    text-align: center;
+  }
+
+  .link-holder {
+    padding: $space-big;
+    gap: $space-big;
+    justify-content: center;
+    align-items: center;
+  }
 
   .card {
+    display: block;
     height: 150px;
     width: 200px;
     background-color: $color-yellow;
@@ -11,5 +23,12 @@
     text-align: center;
     line-height: 150px;
     cursor: pointer;
+  }
+}
+
+@media (min-width: 750px) {
+  .link-holder {
+    height: 50vh;
+    flex-direction: row;
   }
 }

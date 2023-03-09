@@ -14,7 +14,7 @@ export default function Menu() {
     <div className="menu">
       <img src={plates} alt="Black plates arranged on a table" />
       <section className="details flex-column-center">
-        <h1>Menu</h1>
+        <h1>MENU</h1>
         {categoryList}
       </section>
     </div>

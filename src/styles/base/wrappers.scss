@@ -6,44 +6,39 @@
   line-height: 40px;
   text-align: center;
   color: white;
+  cursor: pointer;
 }
 
-.secondary-button {
-  height: 40px;
-  width: 100px;
-  border-radius: 5px;
-  background-color: $color-yellow;
-  line-height: 40px;
-  text-align: center;
-  color: black;
-}
-
-.delete-button {
-  height: 40px;
-  width: 100px;
-  border-radius: 5px;
-  background-color: red;
-  line-height: 40px;
-  text-align: center;
-  color: white;
-}
-
-.back-button {
-  display: inline-block;
-  height: 40px;
-  width: 100px;
-  border-radius: 5px;
-  background-color: grey;
-  line-height: 40px;
-  text-align: center;
-  color: white;
+.primary-button[disabled] {
+  cursor: not-allowed;
 }
 
 .button-holder {
   width: 100%;
+  max-width: 960px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.icon {
+  font-size: 32px;
+  color: rgba(128, 128, 128, 0.4);
+}
+
+.edit-icon {
+  font-size: 30px;
+  color: rgba(128, 128, 128, 0.4);
+}
+
+.delete-icon {
+  font-size: 28px;
+  color: $color-red;
+}
+
+.back-icon {
+  font-size: 32px;
+  color: rgba(128, 128, 128, 0.4);
 }
 
 .flex-center {

@@ -1,0 +1,29 @@
+.contact-form {
+  width: 100%;
+  height: auto;
+  padding: $space-big;
+  gap: $space-medium;
+  border: 0.1px solid $color-yellow;
+  border-radius: 10px;
+
+  label {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  input {
+    background: black;
+    border: $color-yellow 0.5px solid;
+    height: 50px;
+    width: 100%;
+    padding: $space-small;
+    max-width: 450px;
+    border-radius: 10px;
+    color-scheme: dark;
+  }
+
+  input[type="submit"] {
+    background-color: $color-yellow;
+    color: black;
+  }
+}

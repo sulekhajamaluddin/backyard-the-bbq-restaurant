@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useCategories } from "../../state/CategoriesProvider";
-import { useProducts } from "../../state/ProductsProvider";
-import { createDocument } from "../../scripts/firestore/createDocument";
+import { useCategories } from "../../../state/CategoriesProvider";
+import { useProducts } from "../../../state/ProductsProvider";
+import { createDocument } from "../../../scripts/firestore/createDocument";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductForm({}) {
+export default function ProductForm() {
   const navigate = useNavigate();
   const { categories } = useCategories();
   const { dispatch } = useProducts();
@@ -23,18 +23,26 @@ export default function ProductForm({}) {
   });
 
   function onChange(e) {
-    setProduct(() => {
-      return {
-        ...product,
-        [e.target.id]: e.target.value,
-      };
-    });
+    if (e.target.id === "ingredients") {
+      setProduct(() => {
+        return {
+          ...product,
+          [e.target.id]: e.target.value.split(","),
+        };
+      });
+    } else {
+      setProduct(() => {
+        return {
+          ...product,
+          [e.target.id]: e.target.value,
+        };
+      });
+    }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     const documentId = await createDocument(collectionName, product);
-    console.log(documentId);
     dispatch({ type: "create", payload: { id: documentId, ...product } });
     navigate(`/admin/products/${documentId}`);
   }
@@ -52,7 +60,6 @@ export default function ProductForm({}) {
         handleSubmit(e);
       }}
     >
-      <h1>Add A New Product</h1>
       <label>
         Category of the product:
         <select
@@ -73,7 +80,7 @@ export default function ProductForm({}) {
           onChange={(e) => onChange(e)}
         ></input>
       </label>
-      <label className="input-holder">
+      {/* <label className="input-holder">
         Thumbnail URL:
         <input
           type="text"
@@ -90,7 +97,7 @@ export default function ProductForm({}) {
           required
           onChange={(e) => onChange(e)}
         ></input>
-      </label>
+      </label> */}
       <label className="input-holder">
         Short Description
         <input

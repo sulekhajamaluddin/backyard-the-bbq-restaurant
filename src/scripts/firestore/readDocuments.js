@@ -1,4 +1,10 @@
-import { collection, collectionGroup, getDocs } from "firebase/firestore";
+import {
+  collection,
+  collectionGroup,
+  getDocs,
+  rootRef,
+  FieldPath,
+} from "firebase/firestore";
 import { database } from "./databaseSetup";
 
 export async function readDocuments(collectionName) {
@@ -20,9 +26,19 @@ export async function readAllSubcollections(subcollectionName) {
   const result = [];
 
   documents.forEach((doc) => {
-    const dataItem = { id: doc.id, ...doc.data() };
+    const parentId = doc.ref.parent.parent.id;
+    const dataItem = { id: doc.id, parent_id: parentId, ...doc.data() };
     result.push(dataItem);
   });
 
   return result;
+}
+
+export async function filterAllSubcollections() {
+  const collectionRef = collection(database, "categories");
+  const productDocRef = collectionRef.document("1n77Pp3zushaqXFBy1Ts");
+  const products = collectionGroup("products")
+    .orderBy(FieldPath.documentId())
+    .startAt(productDocRef.path)
+    .get();
 }

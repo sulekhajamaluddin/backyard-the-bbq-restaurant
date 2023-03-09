@@ -5,20 +5,34 @@
 @import "./base/wrappers.scss";
 
 //Components
-@import "./components/common/Loader.scss";
-@import "./components/common/Form.scss";
+//Users
 @import "./components/users/Navbar.scss";
 @import "./components/users/Footer.scss";
 @import "./components/users/CategoryItem.scss";
 @import "./components/users/ProductItem.scss";
-@import "./components/admin/CategoryItem.scss";
+@import "./components/users/ContactForm.scss";
+
+//Common
+@import "./components/common/Loader.scss";
+
+//Admin
+@import "./components/admin/Item.scss";
+@import "./components/admin/forms/AddCategory.scss";
 
 //Pages
+//Users
 @import "./pages/users/Home.scss";
 @import "./pages/users/Menu.scss";
 @import "./pages/users/Category.scss";
+@import "./pages/users/Product.scss";
+@import "./pages/users/Contact.scss";
+
+//Admin
 @import "./pages/admin/Dashboard.scss";
 @import "./pages/admin/Categories.scss";
 @import "./pages/admin/ViewCategory.scss";
 @import "./pages/admin/AddCategory.scss";
+@import "./pages/admin/EditCategory.scss";
+
+//Common
 @import "./pages/common/NotFound.scss";

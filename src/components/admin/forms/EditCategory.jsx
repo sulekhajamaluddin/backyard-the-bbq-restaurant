@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { useCategories } from "../../state/CategoriesProvider";
-import { createDocument } from "../../scripts/firestore/createDocument";
+import { useCategories } from "../../../state/CategoriesProvider";
 import { useNavigate } from "react-router-dom";
+import { uploadFile } from "../../../scripts/cloudStorage/uploadFile";
+import { downloadFile } from "../../../scripts/cloudStorage/downloadFile";
+import { updateDocument } from "../../../scripts/firestore/updateDocument";
 
-export default function Form({ collectionName }) {
+export default function EditCategoryForm({ collectionName, categoryItem }) {
   const navigate = useNavigate();
   const { dispatch } = useCategories();
-  const [category, setCategory] = useState({
-    title: "",
-    thumbnailURL: "",
-    short_description: "",
-    long_description: "",
-  });
+  const [category, setCategory] = useState(categoryItem);
+
+  async function handleThumbnail(e) {
+    const file = e.target.files[0];
+
+    const filePath = `menu/${categoryItem.id}_${file.name}`;
+    await uploadFile(file, filePath);
+    const url = await downloadFile(filePath);
+
+    setCategory((category) => {
+      return {
+        ...category,
+        [e.target.id]: url,
+      };
+    });
+  }
 
   function onChange(e) {
     setCategory((category) => {
@@ -24,10 +36,10 @@ export default function Form({ collectionName }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const documentId = await createDocument(collectionName, category);
-    console.log(documentId);
-    dispatch({ type: "create", payload: { id: documentId, ...category } });
-    navigate(`/admin/categories/${documentId}`);
+    await updateDocument(collectionName, category);
+
+    dispatch({ type: "update", payload: category });
+    navigate(`/admin/categories/${category.id}`);
   }
 
   return (
@@ -37,23 +49,23 @@ export default function Form({ collectionName }) {
         handleSubmit(e);
       }}
     >
-      <h1>Add A New Category</h1>
       <label className="input-holder">
         Title:
         <input
           type="text"
           id="title"
           required
+          value={category.title}
           onChange={(e) => onChange(e)}
         ></input>
       </label>
       <label className="input-holder">
-        Thumbnail URL:
+        Thumbnail
         <input
-          type="text"
+          type="file"
           id="thumbnailURL"
-          required
-          onChange={(e) => onChange(e)}
+          accept="image/png, image/jpeg"
+          onChange={(e) => handleThumbnail(e)}
         ></input>
       </label>
       <label className="input-holder">
@@ -63,6 +75,7 @@ export default function Form({ collectionName }) {
           id="short_description"
           placeholder="50 characters"
           required
+          value={category.short_description}
           maxLength={50}
           onChange={(e) => onChange(e)}
         ></input>
@@ -73,6 +86,7 @@ export default function Form({ collectionName }) {
           type="text"
           id="long_description"
           placeholder="100 characters"
+          value={category.long_description}
           onChange={(e) => onChange(e)}
           required
           maxLength={100}
