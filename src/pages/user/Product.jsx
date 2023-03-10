@@ -2,9 +2,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 
 //Project Files
-
 import { useProducts } from "../../state/ProductsProvider";
 import NotFound from "../../pages/common/NotFound";
+import placeholder from "../../assets/placeholder.png";
 
 export default function Product() {
   const { id } = useParams();
@@ -12,22 +12,23 @@ export default function Product() {
   const { products } = useProducts();
 
   const selectedProduct = products.find((product) => product.id === id);
-  const ingredients = selectedProduct.ingredients.map((ingredient, index) => (
-    <span key={index}>{ingredient}</span>
-  ));
 
   //Safeguard
   if (selectedProduct === undefined) return <NotFound text={"product"} />;
 
+  const ingredients = selectedProduct.ingredients.map((ingredient, index) => (
+    <span key={index}>{ingredient}</span>
+  ));
+
+  const { thumbnailURL } = selectedProduct;
+  const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
+
   return (
     <div className="product">
-      <img
-        src={selectedProduct.thumbnailURL}
-        alt={`${selectedProduct.title}`}
-      />
+      <img src={imageSource} alt={`${selectedProduct.title}`} />
       <section className="details flex-column-center">
         <h1>{selectedProduct.title}</h1>
-        <p>{selectedProduct.long_description}</p>
+        <p className="long">{selectedProduct.long_description}</p>
         <span className="price">
           PRICE : {selectedProduct.price}/- per plate.
         </span>

@@ -18,7 +18,6 @@ export default function ProductForm() {
     const newProduct = getAddedProduct(formRef);
     const documentId = await createDocument(collectionName, newProduct);
     dispatch({ type: "create", payload: { id: documentId, ...newProduct } });
-    // navigate(`/admin/products/${documentId}`);
     navigate(`/admin/products`);
   }
 

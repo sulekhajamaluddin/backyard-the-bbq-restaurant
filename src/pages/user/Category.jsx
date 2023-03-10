@@ -10,7 +10,7 @@ import { useCategories } from "../../state/CategoriesProvider";
 import { useProducts } from "../../state/ProductsProvider";
 import NotFound from "../../pages/common/NotFound";
 import Error from "../common/Error";
-import placeholder from "../../assets/food_placeholder.jpeg";
+import placeholder from "../../assets/placeholder.png";
 
 export default function Category() {
   const { id } = useParams();

@@ -6,7 +6,7 @@ export default function getEditedProduct(formRef, product, url) {
     image_main: "",
     short_description: formRef.current.info.value,
     long_description: formRef.current.details.value,
-    ingredients: formRef.current.ingredients.value,
+    ingredients: formRef.current.ingredients.value.split(","),
     price: formRef.current.price.value,
   };
 }
