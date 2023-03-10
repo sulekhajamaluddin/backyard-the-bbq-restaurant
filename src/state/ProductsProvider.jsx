@@ -10,6 +10,7 @@ const Context = createContext(null);
 export function ProductsProvider({ children }) {
   //State
   const [products, dispatch] = useReducer(ProductsReducer, []);
+  console.log(products);
 
   //Properties
   const values = { products, dispatch };

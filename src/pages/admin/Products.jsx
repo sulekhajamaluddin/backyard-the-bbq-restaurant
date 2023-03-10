@@ -28,6 +28,7 @@ export default function Products() {
 
   function onSuccess(data) {
     dispatch({ type: "initialise", payload: data });
+    localStorage.setItem("products", JSON.stringify(data));
     setStatus(1);
   }
 

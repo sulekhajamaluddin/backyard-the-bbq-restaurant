@@ -13,16 +13,21 @@ import placeholder from "../../assets/food_placeholder.jpeg";
 export default function ViewProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products, dispatch } = useProducts();
-  const productSelected = products.find((category) => category.id === id);
+  const { dispatch } = useProducts();
+  const products = JSON.parse(localStorage.getItem("products"));
+
+  const productSelected = products.find((product) => product.id === id);
 
   async function onDelete(item) {
     const message = `Are you sure you want to delete ${item.title}`;
     const result = window.confirm(message);
     if (!result) return;
-    await deleteDocument(`${productSelected.parent_id}/products`, item.id);
+    await deleteDocument(
+      `categories/${productSelected.parent_id}/products`,
+      item.id
+    );
     dispatch({ type: "delete", payload: item.id });
-    navigate("/admin/categories");
+    navigate("/admin/products");
   }
 
   //Safeguard

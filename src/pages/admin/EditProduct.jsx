@@ -11,7 +11,8 @@ import Form from "../../components/admin/forms/EditProduct";
 export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products } = useProducts();
+  //const { products } = useProducts();
+  const products = JSON.parse(localStorage.getItem("products"));
 
   const productSelected = products.find((product) => product.id === id);
 
@@ -32,7 +33,7 @@ export default function EditProduct() {
       </div>
       <Form
         collectionName={`categories/${productSelected.parent_id}/products`}
-        product={productSelected}
+        productItem={productSelected}
       />
     </div>
   );

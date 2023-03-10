@@ -6,19 +6,19 @@ import { getURL } from "../../../scripts/utils/getURL";
 import { updateDocument } from "../../../scripts/firestore/updateDocument";
 import getEditedProduct from "../../../scripts/utils/getEditedProduct";
 
-export default function EditProductForm({ collectionName, product }) {
+export default function EditProductForm({ collectionName, productItem }) {
   const navigate = useNavigate();
   const formRef = useRef();
   const { dispatch } = useProducts();
   const { categories } = useCategories();
   const [url, setUrl] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const { short_description: info, long_description: details } = product;
-  const { title, ingredients: content, price } = product;
+  const { short_description: info, long_description: details } = productItem;
+  const { title, ingredients: content, price } = productItem;
 
   async function handleImage(e) {
     const file = e.target.files[0];
-    const filePath = `menu/${product.id}_${file.name}`;
+    const filePath = `menu/${productItem.id}_${file.name}`;
     const url = await getURL(file, filePath);
     setUrl(url);
     setDisabled(false);
@@ -26,14 +26,17 @@ export default function EditProductForm({ collectionName, product }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const editedProduct = getEditedProduct(formRef, product, url);
+    const editedProduct = getEditedProduct(formRef, productItem, url);
     await updateDocument(collectionName, editedProduct);
-    dispatch({ type: "update", payload: editedProduct });
-    navigate(`/admin/products/${product.id}`);
+    dispatch({
+      type: "update",
+      payload: { ...editedProduct, parent_id: productItem.parent_id },
+    });
+    navigate(`/admin/products`);
   }
 
   const parentCategory = categories.find(
-    (category) => category.id === product.parent_id
+    (category) => category.id === productItem.parent_id
   );
   const parentCategoryName = parentCategory.title;
 

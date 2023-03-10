@@ -18,7 +18,8 @@ export default function ProductForm() {
     const newProduct = getAddedProduct(formRef);
     const documentId = await createDocument(collectionName, newProduct);
     dispatch({ type: "create", payload: { id: documentId, ...newProduct } });
-    navigate(`/admin/products/${documentId}`);
+    // navigate(`/admin/products/${documentId}`);
+    navigate(`/admin/products`);
   }
 
   const options = categories.map((category) => (
@@ -43,7 +44,7 @@ export default function ProductForm() {
       <label>Short Description</label>
       <input type="text" name="info" required />
       <label>Long Description</label>
-      <input type="text" name="details" required />
+      <input type="textarea" name="details" required />
       <label>Ingredients</label>
       <input type="text" name="ingredients" required />
       <label>Price</label>
