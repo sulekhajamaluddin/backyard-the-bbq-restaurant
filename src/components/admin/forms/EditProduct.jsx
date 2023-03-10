@@ -51,7 +51,11 @@ export default function EditProductForm({ collectionName, productItem }) {
       <input type="text" name="title" defaultValue={title} required />
       <label>Category:</label>
       <input type="text" disabled defaultValue={parentCategoryName}></input>
-      <input type="file" onChange={(e) => handleImage(e)} />
+      <input
+        type="file"
+        onChange={(e) => handleImage(e)}
+        accept="image/png, image/jpeg, image/webp"
+      />
       <label>Short Description:</label>
       <input type="text" name="info" defaultValue={info} required />
       <label>Long Description:</label>

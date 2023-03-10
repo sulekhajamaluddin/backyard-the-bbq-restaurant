@@ -9,7 +9,8 @@ import placeholder from "../../assets/placeholder.png";
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products } = useProducts();
+  // const { products } = useProducts();
+  const products = JSON.parse(localStorage.getItem("productItems"));
 
   const selectedProduct = products.find((product) => product.id === id);
 

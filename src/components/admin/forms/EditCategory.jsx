@@ -35,7 +35,12 @@ export default function EditCategoryForm({ collectionName, category }) {
     <form ref={formRef} className="form" onSubmit={(e) => handleSubmit(e)}>
       <label>Title</label>
       <input type="text" name="title" defaultValue={category.title} required />
-      <input type="file" name="image" onChange={(e) => handleImage(e)} />
+      <input
+        type="file"
+        name="image"
+        onChange={(e) => handleImage(e)}
+        accept="image/png, image/jpeg, image/webp"
+      />
       <label>Short Description:</label>
       <input type="text" name="info" defaultValue={info} required max={50} />
       <label>Long Description:</label>

@@ -34,6 +34,7 @@ export default function Category() {
 
   function onSuccess(data) {
     dispatch({ type: "initialise", payload: data });
+    localStorage.setItem("productItems", JSON.stringify(data));
     setStatus(1);
   }
 
