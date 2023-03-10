@@ -26,7 +26,8 @@ export default function ViewCategory() {
   }
 
   //Safeguard
-  if (categorySelected === undefined) return <NotFound text={"category"} />;
+  if (categorySelected === undefined)
+    return <NotFound text={"category"} path={"/admin"} />;
 
   const { title, thumbnailURL, short_description, long_description } =
     categorySelected;

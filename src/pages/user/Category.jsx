@@ -18,9 +18,9 @@ export default function Category() {
   const { products, dispatch } = useProducts();
   const [status, setStatus] = useState(0);
 
-  const selectedCategory = categories.find((category) => category.id === id);
+  const selectedCategory = categories?.find((category) => category.id === id);
 
-  const COLLECTION_NAME = `categories/${selectedCategory.id}/products`;
+  const COLLECTION_NAME = `categories/${id}/products`;
 
   useEffect(() => {
     loadData(COLLECTION_NAME);
@@ -46,7 +46,8 @@ export default function Category() {
   if (status === 2) return <Error />;
 
   //Safeguard
-  if (selectedCategory === undefined) return <NotFound text={"category"} />;
+  if (selectedCategory === undefined)
+    return <NotFound text={"category"} path={"/"} />;
 
   const { thumbnailURL, title } = selectedCategory;
   const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;

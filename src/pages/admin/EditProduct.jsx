@@ -18,7 +18,8 @@ export default function EditProduct() {
 
   //Safeguard
 
-  if (productSelected === undefined) return <NotFound text={"product"} />;
+  if (productSelected === undefined)
+    return <NotFound text={"product"} path={"/admin"} />;
 
   return (
     <div className="edit-category flex-column-center">

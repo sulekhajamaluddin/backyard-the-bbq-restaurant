@@ -15,7 +15,8 @@ export default function EditCategory() {
 
   //Safeguard
 
-  if (categorySelected === undefined) return <NotFound text={"category"} />;
+  if (categorySelected === undefined)
+    return <NotFound text={"category"} path={"/admin"} />;
 
   return (
     <div className="edit-category flex-column-center">

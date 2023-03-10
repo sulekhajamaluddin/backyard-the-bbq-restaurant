@@ -15,7 +15,8 @@ export default function Product() {
   const selectedProduct = products.find((product) => product.id === id);
 
   //Safeguard
-  if (selectedProduct === undefined) return <NotFound text={"product"} />;
+  if (selectedProduct === undefined)
+    return <NotFound text={"product"} path={"/"} />;
 
   const ingredients = selectedProduct.ingredients.map((ingredient, index) => (
     <span key={index}>{ingredient}</span>

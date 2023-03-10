@@ -31,7 +31,8 @@ export default function ViewProduct() {
   }
 
   //Safeguard
-  if (productSelected === undefined) return <NotFound text={"category"} />;
+  if (productSelected === undefined)
+    return <NotFound text={"product"} path={"/admin"} />;
 
   const { title, short_description, long_description, ingredients, price } =
     productSelected;
