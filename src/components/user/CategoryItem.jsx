@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import placeholder from "../../assets/food_placeholder.jpeg";
 
-export default function CategoryItem({ item }) {
-  const { title, thumbnailURL, long_description } = item;
+export default function CategoryItem({ item, content }) {
+  const { title, thumbnailURL } = item;
   const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
   const path = `/category/${item.id}`;
   return (
@@ -10,7 +10,7 @@ export default function CategoryItem({ item }) {
       <img className="thumbnail" src={imageSource} alt="category thumbnail" />
       <div className="flex-column-center">
         <h2>{title}</h2>
-        <p>{long_description}</p>
+        <p className="long">{content}</p>
         <Link className="button" to={path} state={{ category: item }}>
           View menu
         </Link>

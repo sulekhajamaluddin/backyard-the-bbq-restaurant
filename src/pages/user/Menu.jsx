@@ -7,7 +7,11 @@ export default function Menu() {
   const { categories } = useCategories();
 
   const categoryList = categories.map((category) => (
-    <CategoryItem key={category.id} item={category} />
+    <CategoryItem
+      key={category.id}
+      item={category}
+      content={category.long_description}
+    />
   ));
 
   return (

@@ -1,6 +1,6 @@
 .category-item {
   height: 400px;
-  width: 100%;
+  width: 310px;
   padding: $space-medium;
   border: $color-yellow solid 0.5px;
   border-radius: 10px;
@@ -35,16 +35,19 @@
 @media (min-width: 750px) {
   .category-item {
     height: 220px;
+    width: 100%;
     flex-direction: row;
 
     div {
       width: 70%;
+      padding: $space-medium;
       height: 220px;
       align-items: center;
     }
 
     .thumbnail {
-      width: 30%;
+      width: 250px;
+      height: 200px;
     }
   }
 }

@@ -1,11 +1,23 @@
 .footer {
-  height: 110px;
-  padding: $space-big;
-  background-color: black;
+  height: 150px;
+  padding: $space-medium;
+  gap: $space-medium;
+  background-color: $color-yellow;
+  color: black;
 
   section {
     width: 100%;
+    height: 50%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-x-big;
+    background-color: $color-yellow;
+
+    .brands {
+      font-size: 40px;
+      color: black;
+    }
   }
 
   .location,

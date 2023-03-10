@@ -9,7 +9,7 @@ export default function EditCategoryForm({ collectionName, category }) {
   const navigate = useNavigate();
   const formRef = useRef();
   const { dispatch } = useCategories();
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(category.thumbnailURL);
   const [disabled, setDisabled] = useState(false);
 
   const { short_description: info, long_description: details } = category;
@@ -41,9 +41,15 @@ export default function EditCategoryForm({ collectionName, category }) {
       <input type="text" name="title" defaultValue={category.title} required />
       <input type="file" name="image" onChange={(e) => handleImage(e)} />
       <label>Short Description:</label>
-      <input type="text" name="info" defaultValue={info} required />
+      <input type="text" name="info" defaultValue={info} required max={50} />
       <label>Long Description:</label>
-      <input type="textarea" name="details" defaultValue={details} required />
+      <input
+        type="text"
+        name="details"
+        defaultValue={details}
+        required
+        max={100}
+      />
       <input type="submit" className="primary" disabled={disabled}></input>
     </form>
   );

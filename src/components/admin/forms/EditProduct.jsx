@@ -11,7 +11,7 @@ export default function EditProductForm({ collectionName, productItem }) {
   const formRef = useRef();
   const { dispatch } = useProducts();
   const { categories } = useCategories();
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(productItem.thumbnailURL);
   const [disabled, setDisabled] = useState(false);
   const { short_description: info, long_description: details } = productItem;
   const { title, ingredients: content, price } = productItem;

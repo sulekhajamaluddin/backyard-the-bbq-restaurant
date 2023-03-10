@@ -1,17 +1,15 @@
+//Node Modules
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { brands } from "@fortawesome/fontawesome-svg-core/import.macro";
+
 export default function Footer() {
   return (
     <footer className="footer flex-column-center">
+      <h2>Follow us on</h2>
       <section>
-        <p className="location flex-column">
-          <span>Our Location:</span>
-          <span>Level-1, Solna Centrum,</span>
-          <span>Solna, Stockholm</span>
-        </p>
-        <p className="timing flex-column">
-          <span>We are open everyday!!</span>
-          <span>Mon-Sat: 10:00 - 22:00,</span>
-          <span>Sun: 10:00 - 18:00</span>
-        </p>
+        <FontAwesomeIcon className="brands" icon={brands("twitter")} />
+        <FontAwesomeIcon className="brands" icon={brands("facebook")} />
+        <FontAwesomeIcon className="brands" icon={brands("square-instagram")} />
       </section>
       <small>&copy; 2023.SulekhaJamaluddin</small>
     </footer>

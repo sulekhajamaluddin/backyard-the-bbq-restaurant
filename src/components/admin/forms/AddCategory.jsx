@@ -28,9 +28,9 @@ export default function Form({ collectionName }) {
       <label>Title</label>
       <input type="text" name="title" required />
       <label>Short Description</label>
-      <input type="text" name="info" required />
+      <input type="text" name="info" required max={50} />
       <label>Long Description</label>
-      <input type="textarea" name="details" required />
+      <input type="textarea" name="details" required max={100} />
       <input type="submit" className="primary-button"></input>
     </form>
   );
