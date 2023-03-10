@@ -10,11 +10,12 @@ export default function EditCategoryForm({ collectionName, category }) {
   const formRef = useRef();
   const { dispatch } = useCategories();
   const [url, setUrl] = useState("");
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const { short_description: info, long_description: details } = category;
 
   async function handleImage(e) {
+    setDisabled(true);
     const file = e.target.files[0];
     const filePath = `menu/${category.id}_${file.name}`;
     const url = await getURL(file, filePath);

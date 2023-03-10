@@ -12,11 +12,12 @@ export default function EditProductForm({ collectionName, productItem }) {
   const { dispatch } = useProducts();
   const { categories } = useCategories();
   const [url, setUrl] = useState("");
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const { short_description: info, long_description: details } = productItem;
   const { title, ingredients: content, price } = productItem;
 
   async function handleImage(e) {
+    setDisabled(true);
     const file = e.target.files[0];
     const filePath = `menu/${productItem.id}_${file.name}`;
     const url = await getURL(file, filePath);
