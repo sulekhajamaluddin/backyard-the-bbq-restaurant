@@ -1,19 +1,21 @@
 // //Node Modules
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { Link } from "react-router-dom";
 //Project Files
-import { readAllSubcollections } from "../../scripts/firestore/readDocuments";
 import { useProducts } from "../../state/ProductsProvider";
-import Loader from "../../components/common/Loader";
-import Error from "../common/Error";
+import { readAllSubcollections } from "../../scripts/firestore/readDocuments";
+import Filter from "../../components/common/Filter";
 import Item from "../../components/admin/Item";
+import Error from "../common/Error";
+import Loader from "../../components/common/Loader";
+import BackButtonIcon from "../../components/common/BackButtonIcon";
+import { useCategories } from "../../state/CategoriesProvider";
 
 export default function Products() {
   const { products, dispatch } = useProducts();
-  const navigate = useNavigate();
+  const { categories } = useCategories();
   const [status, setStatus] = useState(0);
+  const [displayList, setDisplayList] = useState([]);
   const SUBCOLLECTION_NAME = "products";
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function Products() {
   function onSuccess(data) {
     dispatch({ type: "initialise", payload: data });
     localStorage.setItem("products", JSON.stringify(data));
+    setDisplayList(data);
     setStatus(1);
   }
 
@@ -39,7 +42,7 @@ export default function Products() {
   if (status === 0) return <Loader />;
   if (status === 2) return <Error />;
 
-  const productList = products.map((product) => (
+  const productList = displayList.map((product) => (
     <Item
       key={product.id}
       item={product}
@@ -51,16 +54,17 @@ export default function Products() {
     <div className="categories flex-column-center">
       <h1>PRODUCTS</h1>
       <div className="button-holder">
-        <button onClick={() => navigate("/admin")}>
-          <FontAwesomeIcon
-            className="back-icon"
-            icon={solid("circle-arrow-left")}
-          />
-        </button>
-        <Link className="primary-button" to="/admin/products/add">
+        <BackButtonIcon path={"/admin"} />
+        <Link className="primary" to="/admin/products/add">
           Add new
         </Link>
       </div>
+      <Filter
+        className="select"
+        items={categories}
+        setDisplayList={setDisplayList}
+        products={products}
+      />
       {productList}
     </div>
   );

@@ -44,6 +44,7 @@ export default function EditProductForm({ collectionName, productItem }) {
     (category) => category.id === productItem.parent_id
   );
   const parentCategoryName = parentCategory.title;
+  const fileTypes = "image/png, image/jpeg, image/webp";
 
   return (
     <form ref={formRef} className="form" onSubmit={(e) => handleSubmit(e)}>
@@ -51,11 +52,7 @@ export default function EditProductForm({ collectionName, productItem }) {
       <input type="text" name="title" defaultValue={title} required />
       <label>Category:</label>
       <input type="text" disabled defaultValue={parentCategoryName}></input>
-      <input
-        type="file"
-        onChange={(e) => handleImage(e)}
-        accept="image/png, image/jpeg, image/webp"
-      />
+      <input type="file" onChange={(e) => handleImage(e)} accept={fileTypes} />
       <label>Short Description:</label>
       <input type="text" name="info" defaultValue={info} required />
       <label>Long Description:</label>

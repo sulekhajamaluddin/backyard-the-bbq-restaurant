@@ -20,4 +20,11 @@
     padding: $space-big;
     gap: $space-big;
   }
+
+  .back {
+    height: 50px;
+    width: 100%;
+    background-color: $color-red;
+    border-radius: 10px;
+  }
 }

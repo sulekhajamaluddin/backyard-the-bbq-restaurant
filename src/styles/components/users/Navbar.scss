@@ -15,6 +15,10 @@
   .links {
     margin-left: auto;
     display: flex;
-    gap: $space-big;
+    gap: $space-x-big;
+  }
+
+  a {
+    font-size: 20px;
   }
 }

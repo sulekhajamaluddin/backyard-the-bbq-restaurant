@@ -15,7 +15,6 @@ export default function ViewProduct() {
   const navigate = useNavigate();
   const { dispatch } = useProducts();
   const products = JSON.parse(localStorage.getItem("products"));
-
   const productSelected = products.find((product) => product.id === id);
 
   async function onDelete(item) {
@@ -34,9 +33,8 @@ export default function ViewProduct() {
   if (productSelected === undefined)
     return <NotFound text={"product"} path={"/admin"} />;
 
-  const { title, short_description, long_description, ingredients, price } =
-    productSelected;
-  const { thumbnailURL } = productSelected;
+  const { title, ingredients, price } = productSelected;
+  const { thumbnailURL, short_description, long_description } = productSelected;
   const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
 
   return (

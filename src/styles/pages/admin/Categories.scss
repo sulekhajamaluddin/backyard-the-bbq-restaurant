@@ -9,4 +9,9 @@
   h1 {
     font-size: 25px;
   }
+
+  .filter {
+    align-self: flex-start;
+    padding: $space-medium;
+  }
 }

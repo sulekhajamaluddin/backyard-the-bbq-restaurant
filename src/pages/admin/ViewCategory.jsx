@@ -29,9 +29,8 @@ export default function ViewCategory() {
   if (categorySelected === undefined)
     return <NotFound text={"category"} path={"/admin"} />;
 
-  const { title, thumbnailURL, short_description, long_description } =
-    categorySelected;
-  console.log(thumbnailURL);
+  const { title, thumbnailURL } = categorySelected;
+  const { short_description, long_description } = categorySelected;
   const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
 
   return (

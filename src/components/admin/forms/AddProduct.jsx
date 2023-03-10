@@ -12,6 +12,7 @@ export default function ProductForm() {
   const { dispatch } = useProducts();
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState(false);
+
   const collectionName = `categories/${category}/products`;
 
   async function handleSubmit(e) {

@@ -1,6 +1,6 @@
 //Node Modules
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 //Project Files
 import { readDocuments } from "../../scripts/firestore/readDocuments";
@@ -14,12 +14,11 @@ import placeholder from "../../assets/placeholder.png";
 
 export default function Category() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { categories } = useCategories();
   const { products, dispatch } = useProducts();
   const [status, setStatus] = useState(0);
-
   const selectedCategory = categories?.find((category) => category.id === id);
-
   const COLLECTION_NAME = `categories/${id}/products`;
 
   useEffect(() => {
@@ -57,11 +56,14 @@ export default function Category() {
   ));
 
   return (
-    <div className="category">
+    <div className="category flex-column-center">
       <img src={imageSource} alt="A category thumbnail" />
       <section className="details flex-column-center">
         <h1>{`${title} dishes`}</h1>
         {productsList}
+        <button className="back" onClick={() => navigate(-1)}>
+          Go Back
+        </button>
       </section>
     </div>
   );
