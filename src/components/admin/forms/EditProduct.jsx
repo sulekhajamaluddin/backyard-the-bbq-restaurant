@@ -12,6 +12,7 @@ export default function EditProductForm({ collectionName, productItem }) {
   const { dispatch } = useProducts();
   const { categories } = useCategories();
   const [url, setUrl] = useState(productItem.thumbnailURL);
+  const [message, setMessage] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const { short_description: info, long_description: details } = productItem;
   const { title, ingredients: content, price } = productItem;
@@ -57,9 +58,22 @@ export default function EditProductForm({ collectionName, productItem }) {
       <label>Long Description:</label>
       <input type="textarea" name="details" defaultValue={details} required />
       <label>Ingredients:</label>
-      <input type="text" name="ingredients" defaultValue={content} required />
+      <input
+        type="text"
+        name="ingredients"
+        defaultValue={content}
+        required
+        onFocus={() => setMessage(true)}
+      />
+      {message && (
+        <span className="message">
+          Enter ingredients separated by commas like ingredient1, ingredient2,
+          ingredient3
+        </span>
+      )}
       <label>Price</label>
       <input type="text" name="price" defaultValue={price} required />
+      <input type="reset" />
       <input type="submit" className="primary" disabled={disabled}></input>
     </form>
   );

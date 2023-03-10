@@ -11,6 +11,7 @@ export default function ProductForm() {
   const { categories } = useCategories();
   const { dispatch } = useProducts();
   const [category, setCategory] = useState("");
+  const [message, setMessage] = useState(false);
   const collectionName = `categories/${category}/products`;
 
   async function handleSubmit(e) {
@@ -45,9 +46,21 @@ export default function ProductForm() {
       <label>Long Description</label>
       <input type="textarea" name="details" required />
       <label>Ingredients</label>
-      <input type="text" name="ingredients" required />
+      <input
+        type="text"
+        name="ingredients"
+        required
+        onFocus={() => setMessage(true)}
+      />
+      {message && (
+        <span className="message">
+          Enter ingredients separated by commas like ingredient1, ingredient2,
+          ingredient3
+        </span>
+      )}
       <label>Price</label>
       <input type="text" name="price" required />
+      <input type="reset" />
       <input type="submit" className="primary-button"></input>
     </form>
   );

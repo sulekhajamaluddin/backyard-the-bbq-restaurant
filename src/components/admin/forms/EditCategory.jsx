@@ -50,6 +50,7 @@ export default function EditCategoryForm({ collectionName, category }) {
         required
         max={100}
       />
+      <input type="reset" />
       <input type="submit" className="primary" disabled={disabled}></input>
     </form>
   );

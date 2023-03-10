@@ -31,6 +31,7 @@ export default function Form({ collectionName }) {
       <input type="text" name="info" required max={50} />
       <label>Long Description</label>
       <input type="textarea" name="details" required max={100} />
+      <input type="reset"></input>
       <input type="submit" className="primary-button"></input>
     </form>
   );

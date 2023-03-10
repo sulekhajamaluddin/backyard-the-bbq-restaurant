@@ -12,7 +12,8 @@
     line-height: 50px;
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  input[type="reset"] {
     height: 40px;
     width: 100%;
     border: none;
@@ -24,6 +25,10 @@
     cursor: pointer;
   }
 
+  input[type="reset"] {
+    background-color: grey;
+  }
+
   input[type="textarea"] {
     height: 150px;
     overflow: scroll;
@@ -32,5 +37,10 @@
   input[disabled] {
     cursor: not-allowed;
     background: rgb(191, 189, 189);
+  }
+
+  .message {
+    font-size: 14px;
+    color: $color-red;
   }
 }
