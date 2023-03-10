@@ -22,6 +22,17 @@ export default function ProductForm() {
     navigate(`/admin/products`);
   }
 
+  function selectCategory(e) {
+    setCategory(e.target.value);
+  }
+
+  function focus() {
+    setMessage(true);
+  }
+
+  const guideline =
+    "Enter ingredients separated by commas like ingredient1, ingredient2, ingredient3";
+
   const options = categories.map((category) => (
     <option key={category.id} value={category.id}>
       {category.title}
@@ -29,13 +40,9 @@ export default function ProductForm() {
   ));
 
   return (
-    <form
-      ref={formRef}
-      className="form flex-column"
-      onSubmit={(e) => handleSubmit(e)}
-    >
+    <form ref={formRef} className="form" onSubmit={(e) => handleSubmit(e)}>
       <label>Category of the product:</label>
-      <select id="category" onChange={(e) => setCategory(e.target.value)}>
+      <select id="category" onChange={(e) => selectCategory(e)} required>
         <option value="">Choose a category</option>
         {options}
       </select>
@@ -46,18 +53,8 @@ export default function ProductForm() {
       <label>Long Description</label>
       <input type="textarea" name="details" required />
       <label>Ingredients</label>
-      <input
-        type="text"
-        name="ingredients"
-        required
-        onFocus={() => setMessage(true)}
-      />
-      {message && (
-        <span className="message">
-          Enter ingredients separated by commas like ingredient1, ingredient2,
-          ingredient3
-        </span>
-      )}
+      <input type="text" name="ingredients" required onFocus={() => focus()} />
+      {message && <span className="message">{guideline}</span>}
       <label>Price</label>
       <input type="text" name="price" required />
       <input type="reset" />

@@ -37,17 +37,16 @@ export default function EditProductForm({ collectionName, productItem }) {
     navigate(`/admin/products`);
   }
 
+  const guideline =
+    "Enter ingredients separated by commas like ingredient1, ingredient2, ingredient3";
+
   const parentCategory = categories.find(
     (category) => category.id === productItem.parent_id
   );
   const parentCategoryName = parentCategory.title;
 
   return (
-    <form
-      ref={formRef}
-      className="form flex-column"
-      onSubmit={(e) => handleSubmit(e)}
-    >
+    <form ref={formRef} className="form" onSubmit={(e) => handleSubmit(e)}>
       <label>Title</label>
       <input type="text" name="title" defaultValue={title} required />
       <label>Category:</label>
@@ -65,12 +64,7 @@ export default function EditProductForm({ collectionName, productItem }) {
         required
         onFocus={() => setMessage(true)}
       />
-      {message && (
-        <span className="message">
-          Enter ingredients separated by commas like ingredient1, ingredient2,
-          ingredient3
-        </span>
-      )}
+      {message && <span className="message">{guideline}</span>}
       <label>Price</label>
       <input type="text" name="price" defaultValue={price} required />
       <input type="reset" />

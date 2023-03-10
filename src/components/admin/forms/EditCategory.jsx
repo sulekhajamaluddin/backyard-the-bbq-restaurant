@@ -32,11 +32,7 @@ export default function EditCategoryForm({ collectionName, category }) {
   }
 
   return (
-    <form
-      ref={formRef}
-      className="form flex-column"
-      onSubmit={(e) => handleSubmit(e)}
-    >
+    <form ref={formRef} className="form" onSubmit={(e) => handleSubmit(e)}>
       <label>Title</label>
       <input type="text" name="title" defaultValue={category.title} required />
       <input type="file" name="image" onChange={(e) => handleImage(e)} />
