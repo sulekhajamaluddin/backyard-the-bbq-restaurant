@@ -10,6 +10,7 @@ import { useCategories } from "../../state/CategoriesProvider";
 import { useProducts } from "../../state/ProductsProvider";
 import NotFound from "../../pages/common/NotFound";
 import Error from "../common/Error";
+import placeholder from "../../assets/food_placeholder.jpeg";
 
 export default function Category() {
   const { id } = useParams();
@@ -46,18 +47,18 @@ export default function Category() {
   //Safeguard
   if (selectedCategory === undefined) return <NotFound text={"category"} />;
 
+  const { thumbnailURL, title } = selectedCategory;
+  const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
+
   const productsList = products.map((product) => (
     <ProductItem key={product.id} item={product} />
   ));
 
   return (
     <div className="category">
-      <img
-        src={selectedCategory.thumbnailURL}
-        alt={`${selectedCategory.title}`}
-      />
+      <img src={imageSource} alt="A category thumbnail" />
       <section className="details flex-column-center">
-        <h1>{`${selectedCategory.title} dishes`}</h1>
+        <h1>{`${title} dishes`}</h1>
         {productsList}
       </section>
     </div>

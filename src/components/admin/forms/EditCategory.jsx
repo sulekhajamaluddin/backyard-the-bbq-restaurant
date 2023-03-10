@@ -1,98 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useCategories } from "../../../state/CategoriesProvider";
 import { useNavigate } from "react-router-dom";
-import { uploadFile } from "../../../scripts/cloudStorage/uploadFile";
-import { downloadFile } from "../../../scripts/cloudStorage/downloadFile";
+import { getURL } from "../../../scripts/utils/getURL";
 import { updateDocument } from "../../../scripts/firestore/updateDocument";
+import getEditedCategory from "../../../scripts/utils/getEditedCategory";
 
-export default function EditCategoryForm({ collectionName, categoryItem }) {
+export default function EditCategoryForm({ collectionName, category }) {
   const navigate = useNavigate();
+  const formRef = useRef();
   const { dispatch } = useCategories();
-  const [category, setCategory] = useState(categoryItem);
+  const [url, setUrl] = useState("");
+  const [disabled, setDisabled] = useState(true);
 
-  async function handleThumbnail(e) {
+  const { short_description: info, long_description: details } = category;
+
+  async function handleImage(e) {
     const file = e.target.files[0];
-
-    const filePath = `menu/${categoryItem.id}_${file.name}`;
-    await uploadFile(file, filePath);
-    const url = await downloadFile(filePath);
-
-    setCategory((category) => {
-      return {
-        ...category,
-        [e.target.id]: url,
-      };
-    });
-  }
-
-  function onChange(e) {
-    setCategory((category) => {
-      return {
-        ...category,
-        [e.target.id]: e.target.value,
-      };
-    });
+    const filePath = `menu/${category.id}_${file.name}`;
+    const url = await getURL(file, filePath);
+    setUrl(url);
+    setDisabled(false);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await updateDocument(collectionName, category);
-
-    dispatch({ type: "update", payload: category });
+    const editedCategory = getEditedCategory(formRef, category, url);
+    await updateDocument(collectionName, editedCategory);
+    dispatch({ type: "update", payload: editedCategory });
     navigate(`/admin/categories/${category.id}`);
   }
 
   return (
     <form
+      ref={formRef}
       className="form flex-column"
-      onSubmit={(e) => {
-        handleSubmit(e);
-      }}
+      onSubmit={(e) => handleSubmit(e)}
     >
-      <label className="input-holder">
-        Title:
-        <input
-          type="text"
-          id="title"
-          required
-          value={category.title}
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Thumbnail
-        <input
-          type="file"
-          id="thumbnailURL"
-          accept="image/png, image/jpeg"
-          onChange={(e) => handleThumbnail(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Short Description
-        <input
-          type="text"
-          id="short_description"
-          placeholder="50 characters"
-          required
-          value={category.short_description}
-          maxLength={50}
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Long Description
-        <textarea
-          type="text"
-          id="long_description"
-          placeholder="100 characters"
-          value={category.long_description}
-          onChange={(e) => onChange(e)}
-          required
-          maxLength={100}
-        ></textarea>
-      </label>
-      <input type="submit" className="primary-button"></input>
+      <label>Title</label>
+      <input type="text" name="title" defaultValue={category.title} required />
+      <input type="file" name="image" onChange={(e) => handleImage(e)} />
+      <label>Short Description:</label>
+      <input type="text" name="info" defaultValue={info} required />
+      <label>Long Description:</label>
+      <input type="textarea" name="details" defaultValue={details} required />
+      <input type="submit" className="primary" disabled={disabled}></input>
     </form>
   );
 }

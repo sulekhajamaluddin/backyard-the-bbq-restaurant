@@ -1,18 +1,10 @@
 //Node Modules
-import React, { useState, useRef } from "react";
-import { sendEmail } from "../../scripts/utils/getExcludedRoutes";
+import React, { useRef } from "react";
+import { sendEmail } from "../../scripts/utils/sendEmail";
 
 export default function Form() {
-  const [newInfo, setNewInfo] = useState({});
   const currentDate = new Date().toISOString().split("T")[0];
   const form = useRef();
-
-  function handleInput(e) {
-    setNewInfo((newInfo) => ({
-      ...newInfo,
-      [e.target.name]: e.target.value,
-    }));
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,45 +16,16 @@ export default function Form() {
     <form
       ref={form}
       className="contact-form flex-column-center"
-      onSubmit={(e) => handleSubmit(e, form.current)}
+      onSubmit={(e) => handleSubmit(e)}
     >
-      <label>
-        Name
-        <input
-          type="text"
-          name="name"
-          onChange={(e) => handleInput(e)}
-          required
-        />
-      </label>
-      <label>
-        Email
-        <input
-          type="email"
-          name="email"
-          onChange={(e) => handleInput(e)}
-          required
-        />
-      </label>
-      <label>
-        Date
-        <input
-          type="date"
-          name="date"
-          min={currentDate}
-          required
-          onChange={(e) => handleInput(e)}
-        />
-      </label>
-      <label>
-        Time
-        <input
-          type="time"
-          name="time"
-          onChange={(e) => handleInput(e)}
-          required
-        />
-      </label>
+      <label>Name</label>
+      <input type="text" name="name" required />
+      <label>Email</label>
+      <input type="email" name="email" required />
+      <label>Date</label>
+      <input type="date" name="date" min={currentDate} required />
+      <label>Time</label>
+      <input type="time" name="time" required />
       <input type={"submit"} />
     </form>
   );

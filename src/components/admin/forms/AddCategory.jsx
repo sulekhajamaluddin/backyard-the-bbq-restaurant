@@ -1,77 +1,37 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCategories } from "../../../state/CategoriesProvider";
 import { createDocument } from "../../../scripts/firestore/createDocument";
-import { useNavigate } from "react-router-dom";
-import Input from "../../common/Input";
+import getAddedCategory from "../../../scripts/utils/getAddedCategory";
 
 export default function Form({ collectionName }) {
   const navigate = useNavigate();
+  const formRef = useRef();
   const { dispatch } = useCategories();
-  const [category, setCategory] = useState({
-    title: "",
-    thumbnailURL: "",
-    image_mainURL: "",
-    short_description: "",
-    long_description: "",
-  });
-
-  function onChange(e) {
-    console.log(e.target.value);
-    setCategory((category) => {
-      return {
-        ...category,
-        [e.target.id]: e.target.value,
-      };
-    });
-  }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const documentId = await createDocument(collectionName, category);
-    dispatch({ type: "create", payload: { id: documentId, ...category } });
+    const newCategory = getAddedCategory(formRef);
+    const documentId = await createDocument(collectionName, newCategory);
+    dispatch({ type: "create", payload: { id: documentId, ...newCategory } });
     navigate(`/admin/categories/${documentId}`);
   }
 
   return (
     <form
+      ref={formRef}
       className="form flex-column"
       onSubmit={(e) => {
         handleSubmit(e);
       }}
     >
-      {/* <Input text="Title:" id="title" onChange={onChange} /> */}
-      <label className="input-holder">
-        <span>Title:</span>
-        <input
-          type="text"
-          id="title"
-          required
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        <span>Short Description</span>
-        <input
-          type="text"
-          id="short_description"
-          placeholder="50 characters"
-          required
-          maxLength={50}
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        <span>Long Description</span>
-        <textarea
-          type="text"
-          id="long_description"
-          placeholder="100 characters"
-          onChange={(e) => onChange(e)}
-          required
-          maxLength={100}
-        ></textarea>
-      </label>
-      <input type="submit" className="primary-button" disabled></input>
+      <label>Title</label>
+      <input type="text" name="title" required />
+      <label>Short Description</label>
+      <input type="text" name="info" required />
+      <label>Long Description</label>
+      <input type="textarea" name="details" required />
+      <input type="submit" className="primary-button"></input>
     </form>
   );
 }

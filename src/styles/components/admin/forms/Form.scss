@@ -1,0 +1,36 @@
+.form {
+  width: 100%;
+  max-width: 550px;
+  gap: $space-medium;
+
+  input {
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(128, 128, 128, 0.1);
+    padding: 0 $space-medium;
+    line-height: 50px;
+  }
+
+  input[type="submit"] {
+    height: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background-color: $color-blue;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+  }
+
+  input[type="textarea"] {
+    height: 150px;
+    overflow: scroll;
+  }
+
+  input[disabled] {
+    cursor: not-allowed;
+    background: rgb(191, 189, 189);
+  }
+}

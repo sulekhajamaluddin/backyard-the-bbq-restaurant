@@ -1,116 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useCategories } from "../../../state/CategoriesProvider";
 import { useProducts } from "../../../state/ProductsProvider";
 import { useNavigate } from "react-router-dom";
-import { uploadFile } from "../../../scripts/cloudStorage/uploadFile";
-import { downloadFile } from "../../../scripts/cloudStorage/downloadFile";
+import { getURL } from "../../../scripts/utils/getURL";
 import { updateDocument } from "../../../scripts/firestore/updateDocument";
+import getEditedProduct from "../../../scripts/utils/getEditedProduct";
 
-export default function EditProductForm({ collectionName, productItem }) {
-  console.log(collectionName);
+export default function EditProductForm({ collectionName, product }) {
   const navigate = useNavigate();
+  const formRef = useRef();
   const { dispatch } = useProducts();
   const { categories } = useCategories();
-  const [category, setCategory] = useState(productItem);
+  const [url, setUrl] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  const { short_description: info, long_description: details } = product;
+  const { title, ingredients: content, price } = product;
 
-  async function handleThumbnail(e) {
+  async function handleImage(e) {
     const file = e.target.files[0];
-
-    const filePath = `menu/${productItem.id}_${file.name}`;
-    await uploadFile(file, filePath);
-    const url = await downloadFile(filePath);
-
-    setCategory((category) => {
-      return {
-        ...category,
-        [e.target.id]: url,
-      };
-    });
-  }
-
-  function onChange(e) {
-    setCategory((category) => {
-      return {
-        ...category,
-        [e.target.id]: e.target.value,
-      };
-    });
+    const filePath = `menu/${product.id}_${file.name}`;
+    const url = await getURL(file, filePath);
+    setUrl(url);
+    setDisabled(false);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(collectionName);
-    await updateDocument(collectionName, category);
-    dispatch({ type: "update", payload: category });
-    navigate(`/admin/products/${category.id}`);
+    const editedProduct = getEditedProduct(formRef, product, url);
+    await updateDocument(collectionName, editedProduct);
+    dispatch({ type: "update", payload: editedProduct });
+    navigate(`/admin/products/${product.id}`);
   }
 
   const parentCategory = categories.find(
-    (category) => category.id === productItem.parent_id
+    (category) => category.id === product.parent_id
   );
   const parentCategoryName = parentCategory.title;
 
   return (
     <form
+      ref={formRef}
       className="form flex-column"
-      onSubmit={(e) => {
-        handleSubmit(e);
-      }}
+      onSubmit={(e) => handleSubmit(e)}
     >
-      <label className="input-holder">
-        Title:
-        <input
-          type="text"
-          id="title"
-          required
-          value={category.title}
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Category:
-        <input
-          type="text"
-          id="category"
-          disabled
-          value={parentCategoryName}
-        ></input>
-      </label>
-
-      <label className="input-holder">
-        Thumbnail
-        <input
-          type="file"
-          id="thumbnailURL"
-          accept="image/png, image/jpeg"
-          onChange={(e) => handleThumbnail(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Short Description
-        <input
-          type="text"
-          id="short_description"
-          placeholder="50 characters"
-          required
-          value={category.short_description}
-          maxLength={50}
-          onChange={(e) => onChange(e)}
-        ></input>
-      </label>
-      <label className="input-holder">
-        Long Description
-        <textarea
-          type="text"
-          id="long_description"
-          placeholder="100 characters"
-          value={category.long_description}
-          onChange={(e) => onChange(e)}
-          required
-          maxLength={100}
-        ></textarea>
-      </label>
-      <input type="submit" className="primary-button"></input>
+      <label>Title</label>
+      <input type="text" name="title" defaultValue={title} required />
+      <label>Category:</label>
+      <input type="text" disabled defaultValue={parentCategoryName}></input>
+      <input type="file" onChange={(e) => handleImage(e)} />
+      <label>Short Description:</label>
+      <input type="text" name="info" defaultValue={info} required />
+      <label>Long Description:</label>
+      <input type="textarea" name="details" defaultValue={details} required />
+      <label>Ingredients:</label>
+      <input type="text" name="ingredients" defaultValue={content} required />
+      <label>Price</label>
+      <input type="text" name="price" defaultValue={price} required />
+      <input type="submit" className="primary" disabled={disabled}></input>
     </form>
   );
 }

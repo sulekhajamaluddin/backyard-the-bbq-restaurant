@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-
 //Project Files
 import { readAllSubcollections } from "../../scripts/firestore/readDocuments";
 import { useProducts } from "../../state/ProductsProvider";
@@ -12,13 +11,9 @@ import Error from "../common/Error";
 import Item from "../../components/admin/Item";
 
 export default function Products() {
-  //Global State
   const { products, dispatch } = useProducts();
   const navigate = useNavigate();
-
-  //Local State
   const [status, setStatus] = useState(0);
-
   const SUBCOLLECTION_NAME = "products";
 
   useEffect(() => {

@@ -32,7 +32,7 @@ export default function EditProduct() {
       </div>
       <Form
         collectionName={`categories/${productSelected.parent_id}/products`}
-        productItem={productSelected}
+        product={productSelected}
       />
     </div>
   );

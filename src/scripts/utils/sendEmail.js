@@ -1,15 +1,5 @@
 import emailjs from "@emailjs/browser";
 
-export function getExcludedRoutes() {
-  return [
-    "/admin",
-    "/admin/categories",
-    "/admin/categories/add",
-    "/admin/categories/1n77Pp3zushaqXFBy1Ts",
-    "/admin/products",
-  ];
-}
-
 export function sendEmail(e) {
   e.preventDefault();
   emailjs

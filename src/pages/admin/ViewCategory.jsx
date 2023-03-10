@@ -1,18 +1,19 @@
 //Node Modules
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-
+import { useNavigate, useParams } from "react-router-dom";
 //Project Files
 import { useCategories } from "../../state/CategoriesProvider";
 import deleteDocument from "../../scripts/firestore/deleteDocument";
 import NotFound from "../common/NotFound";
+import placeholder from "../../assets/food_placeholder.jpeg";
+import BackButtonIcon from "../../components/common/BackButtonIcon";
+import DisplayField from "../../components/common/DisplayField";
+import EditButtonIcon from "../../components/common/EditButtonIcon";
+import DeleteButtonIcon from "../../components/common/DeleteButtonIcon";
 
 export default function ViewCategory() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { categories, dispatch } = useCategories();
-
   const categorySelected = categories.find((category) => category.id === id);
 
   async function onDelete(item) {
@@ -25,47 +26,26 @@ export default function ViewCategory() {
   }
 
   //Safeguard
-
   if (categorySelected === undefined) return <NotFound text={"category"} />;
+
+  const { title, thumbnailURL, short_description, long_description } =
+    categorySelected;
+  console.log(thumbnailURL);
+  const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
 
   return (
     <div className="view-category flex-column-center">
       <h1>View Category</h1>
       <div className="button-holder">
-        <button onClick={() => navigate("/admin/categories")}>
-          <FontAwesomeIcon
-            className="back-icon"
-            icon={solid("circle-arrow-left")}
-          />
-        </button>
-        <Link to={`/admin/categories/${id}/edit`}>
-          <FontAwesomeIcon
-            className="edit-icon"
-            icon={solid("pen-to-square")}
-          />
-        </Link>
-        <button>
-          <FontAwesomeIcon
-            className="delete-icon"
-            icon={solid("trash-can")}
-            onClick={() => onDelete(categorySelected)}
-          />
-        </button>
+        <BackButtonIcon path="/admin/categories" />
+        <EditButtonIcon path={`/admin/categories/${id}/edit`} />
+        <DeleteButtonIcon onDelete={() => onDelete(categorySelected)} />
       </div>
       <article className="category-article flex-column">
-        <div className="content flex-column">
-          <span>Title:</span>{" "}
-          <span className="title info">{categorySelected.title}</span>
-        </div>
-        <div className="content flex-column">
-          <span>Short description:</span>{" "}
-          <span className="info">{categorySelected.short_description}</span>
-        </div>
-        <div className="content flex-column">
-          <span>Long description:</span>{" "}
-          <span className="info">{categorySelected.long_description}</span>
-        </div>
-        <img src={categorySelected.thumbnailURL} alt="category" />
+        <DisplayField text="Title:" content={title} />
+        <DisplayField text="Description:" content={short_description} />
+        <DisplayField text="Long Description:" content={long_description} />
+        <img src={imageSource} alt="category" />
       </article>
     </div>
   );
