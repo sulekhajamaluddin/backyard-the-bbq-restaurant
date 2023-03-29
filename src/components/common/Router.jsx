@@ -41,7 +41,7 @@ export default function Router() {
         <Route path="/admin/products/add" element={<AddProduct />} />
         <Route path="/admin/products/:id" element={<ViewProduct />} />
         <Route path="/admin/products/:id/edit" element={<EditProduct />} />
-        <Route path="*" element={<NotFound text={"page"} />} />
+        <Route path="*" element={<NotFound text={"page"} path={"/"} />} />
       </Routes>
     </div>
   );

@@ -59,7 +59,7 @@ export default function Category() {
     <div className="category flex-column-center">
       <img src={imageSource} alt="A category thumbnail" />
       <section className="details flex-column-center">
-        <h1>{`${title} dishes`}</h1>
+        <h1>{`${title}`}</h1>
         {productsList}
         <button className="back" onClick={() => navigate(-1)}>
           Go Back

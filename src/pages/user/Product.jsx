@@ -1,36 +1,63 @@
 //Node Modules
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 //Project Files
+import { readAllSubcollections } from "../../scripts/firestore/readDocuments";
 import NotFound from "../../pages/common/NotFound";
 import placeholder from "../../assets/placeholder.png";
+import Loader from "../../components/common/Loader";
+import Error from "../common/Error";
 
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const products = JSON.parse(localStorage.getItem("productItems"));
-  const selectedProduct = products.find((product) => product.id === id);
+  const [status, setStatus] = useState(0);
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    loadData("products");
+    console.log("useEffect");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function loadData(collectionName) {
+    console.log("loading");
+    const data = await readAllSubcollections(collectionName).catch(onFail);
+    console.log(data);
+    onSuccess(data);
+  }
+
+  function onSuccess(data) {
+    console.log(data);
+    const selectedProduct = data.find((product) => product.id === id);
+    setProduct(selectedProduct);
+    setStatus(1);
+  }
+
+  function onFail() {
+    setStatus(2);
+  }
 
   //Safeguard
-  if (selectedProduct === undefined)
-    return <NotFound text={"product"} path={"/"} />;
+  if (product === undefined) return <NotFound text={"product"} path={"/"} />;
+  if (status === 0) return <Loader />;
+  if (status === 2) return <Error />;
 
-  const ingredients = selectedProduct.ingredients.map((ingredient, index) => (
+  const ingredients = product.ingredients.map((ingredient, index) => (
     <span key={index}>{ingredient}</span>
   ));
 
-  const { thumbnailURL } = selectedProduct;
+  const { thumbnailURL } = product;
   const imageSource = thumbnailURL === "" ? placeholder : thumbnailURL;
 
   return (
     <div className="product">
-      <img src={imageSource} alt={`${selectedProduct.title}`} />
+      <img src={imageSource} alt={`${product.title}`} />
       <section className="details flex-column-center">
-        <h1>{selectedProduct.title}</h1>
-        <p className="long">{selectedProduct.long_description}</p>
-        <span className="price">
-          PRICE : {selectedProduct.price}/- per plate.
-        </span>
+        <h1>{product.title}</h1>
+        <p className="long">{product.long_description}</p>
+        <span className="price">PRICE : {product.price}/- per plate.</span>
         <section className="ingredients flex-column-center">
           <h2>Ingredients</h2>
           {ingredients}

@@ -5,6 +5,7 @@ import {
   rootRef,
   FieldPath,
 } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { database } from "./databaseSetup";
 
 export async function readDocuments(collectionName) {
@@ -41,4 +42,14 @@ export async function filterAllSubcollections() {
     .orderBy(FieldPath.documentId())
     .startAt(productDocRef.path)
     .get();
+}
+
+export async function readDocument(collectionName, docId) {
+  const documentReference = doc(database, collectionName, docId);
+  const document = await getDoc(documentReference);
+  if (document.exists()) {
+    return document.data();
+  } else {
+    console.log("No such document!");
+  }
 }
